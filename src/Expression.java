@@ -54,4 +54,16 @@ public interface Expression {
      * @return new expression.
      */
     Expression assign(String var, Expression expression);
+
+    /**
+     * Nandifies expression.
+     * @return expression only with nand.
+     */
+    Expression nandify();
+
+    /**
+     * Norifies expression.
+     * @return expression only with nor.
+     */
+    Expression norify();
 }

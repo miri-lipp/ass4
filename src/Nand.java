@@ -32,4 +32,9 @@ public class Nand extends BinaryExpression implements Expression {
     public String toString() {
         return format("A");
     }
+
+    @Override
+    public Expression nandify() {
+        return this;
+    }
 }

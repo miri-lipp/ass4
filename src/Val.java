@@ -39,6 +39,12 @@ public class Val implements Expression {
     public Expression assign(String var, Expression expression) {
         return this;
     }
+
+    @Override
+    public Expression nandify() {
+        return this;
+    }
+
     @Override
     public String toString() {
         return this.val ? "T" : "F";

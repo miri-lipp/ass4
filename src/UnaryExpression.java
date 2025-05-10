@@ -1,8 +1,5 @@
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ArrayList;
 
 /**
  * Hierarchy class for unary operators.
@@ -51,5 +48,14 @@ public abstract class UnaryExpression extends BaseExpression implements Expressi
      */
     public Expression getExpr() {
         return expr;
+    }
+    //returns new string.
+    protected String format(String symbol) {
+        return unaryToString(symbol, this.expr);
+    }
+    @Override
+    public Expression nandify() {
+        Expression exp = getExpr().nandify();
+        return new Nand(exp, exp);
     }
 }

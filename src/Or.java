@@ -31,4 +31,14 @@ public class Or extends BinaryExpression implements Expression {
     public String toString() {
         return format("|");
     }
+
+    @Override
+    public Expression nandify() {
+        Expression expL = getLeft().nandify();
+        Expression expR = getRight().nandify();
+        Expression nandL = new Nand(expL, expL);
+        Expression nandR = new Nand(expR, expR);
+        return  new Nand(nandL, nandR);
+    }
+
 }

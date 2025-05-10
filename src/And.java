@@ -31,4 +31,12 @@ public class And extends BinaryExpression implements Expression {
     public String toString() {
         return format("&");
     }
+
+    @Override
+    public Expression nandify() {
+        Expression expL = getLeft().nandify();
+        Expression expR = getRight().nandify();
+        Expression nand = new Nand(expL, expR);
+        return  new Nand(nand, nand);
+    }
 }

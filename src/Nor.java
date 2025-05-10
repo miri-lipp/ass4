@@ -31,4 +31,14 @@ public class Nor extends BinaryExpression implements Expression {
     public String toString() {
         return format("V");
     }
+
+    @Override
+    public Expression nandify() {
+        Expression expL = getLeft().nandify();
+        Expression expR = getRight().nandify();
+        Expression firstPart = new Nand(expL, expL);
+        Expression secondPart = new Nand(expR, expR);
+        Expression exp = new Nand(firstPart, secondPart);
+        return new Nand(exp, exp);
+    }
 }

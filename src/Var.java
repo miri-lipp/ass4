@@ -42,6 +42,11 @@ public class Var implements Expression {
     }
 
     @Override
+    public Expression nandify() {
+        return this;
+    }
+
+    @Override
     public String toString() {
         return this.varName;
     }

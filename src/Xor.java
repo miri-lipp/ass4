@@ -31,4 +31,14 @@ public class Xor extends BinaryExpression implements Expression {
     public String toString() {
         return format("^");
     }
+
+    @Override
+    public Expression nandify() {
+        Expression expL = getLeft().nandify();
+        Expression expR = getRight().nandify();
+        Expression exp1 = new Nand(expL, expR);
+        Expression exp2 = new Nand(expL, exp1);
+        Expression exp3 = new Nand(expR, exp1);
+        return new Nand(exp2, exp3);
+    }
 }

@@ -30,4 +30,15 @@ public class Xnor extends BinaryExpression implements Expression {
     public String toString() {
         return format("#");
     }
+
+    @Override
+    public Expression nandify() {
+        Expression expL = getLeft().nandify();
+        Expression expR = getRight().nandify();
+        Expression firstPart = new Nand(expL, expL);
+        Expression secondPart = new Nand(expR, expR);
+        Expression exp1 = new Nand(expL, expR);
+        Expression exp2 = new Nand(firstPart, secondPart);
+        return new Nand(exp1, exp2);
+    }
 }

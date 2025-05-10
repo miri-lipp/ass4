@@ -1,9 +1,5 @@
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ArrayList;
-
 /**
  * Class for Binary expressions.
  */
@@ -28,10 +24,7 @@ public abstract class BinaryExpression extends BaseExpression implements Express
 
     @Override
     public List<String> getVariables() {
-        Set<String> vars = new HashSet<>();
-        vars.addAll(left.getVariables());
-        vars.addAll(right.getVariables());
-        return new ArrayList<>(vars);
+        return mergeVariableLists(left.getVariables(), right.getVariables());
     }
 
     @Override
@@ -64,6 +57,6 @@ public abstract class BinaryExpression extends BaseExpression implements Express
     }
 
     protected String format(String symbol) {
-        return "(" + this.left.toString() + " " + symbol + " " + this.right.toString() + ")";
+        return binaryToString(symbol, this.left, this.right);
     }
 }
