@@ -28,7 +28,7 @@ public class TestMain {
         System.out.println(e3);
         //System.out.println(e.nandify());
         //System.out.println(e.norify());
-        Expression e4 =  new Xor(new And(new Var("x"), new Val(false)), new Or(new Var("y"), new Val(false)));
+        Expression e4 =  new And( new Xnor( new Var ("x"), new Var("x")), new Var("y"));
         System.out.println(e4.simplify());
         System.out.println(e3.simplify());
         System.out.println(e2.simplify());

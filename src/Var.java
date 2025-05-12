@@ -25,7 +25,7 @@ public class Var implements Expression {
 
     @Override
     public Boolean evaluate() throws Exception {
-        return true;
+        throw new Exception("Cannot evaluate variable '" + varName + "' without assigment");
     }
 
     @Override

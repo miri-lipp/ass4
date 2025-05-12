@@ -60,9 +60,10 @@ public class And extends BinaryExpression implements Expression {
             return expR;
         } else if (expR.getVariables().isEmpty() && expR.evaluate()) { //x && T = x
             return expL;
-        } else if (!expR.evaluate() || !expL.evaluate()) { //F && x == x && F = F
+        } else if ((expR.getVariables().isEmpty() && !expR.evaluate())
+                || (expL.getVariables().isEmpty() && !expL.evaluate())) { //F && x == x && F = F
             return new Val(false);
-        } else if (getLeft().getVariables().equals(getRight().getVariables())) { //x && x = x
+        } else if (expL.equals(expR)) { //x && x = x
             return expL;
         }
         return new And(expL, expR);

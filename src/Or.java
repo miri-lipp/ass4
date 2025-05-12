@@ -63,7 +63,7 @@ public class Or extends BinaryExpression {
         } else if ((expR.getVariables().isEmpty() && expR.evaluate())
                 || (expL.getVariables().isEmpty() && expL.evaluate())) { //T | x == x | T = T
             return new Val(true);
-        } else if (expL.getVariables().equals(expR.getVariables())) { // x | x = x
+        } else if (expL.equals(expR)) { // x | x = x
             return expL;
         }
         return new Or(expL, expR);

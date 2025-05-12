@@ -64,11 +64,11 @@ public class Xor extends BinaryExpression {
             return new Not(expR);
         } else if (expR.getVariables().isEmpty() && expR.evaluate()) { // x ^ T = ~x
             return new Not(expL);
-        } else if (!expR.evaluate()) { // x ^ F = x
+        } else if (expR.getVariables().isEmpty() && !expR.evaluate()) { // x ^ F = x
             return expL;
-        } else if (!expL.evaluate()) { // F ^ x = x
+        } else if (expL.getVariables().isEmpty() && !expL.evaluate()) { // F ^ x = x
             return expR;
-        } else if (expL.getVariables().equals(expR.getVariables())) { // x ^ x = F
+        } else if (expL.equals(expR)) { // x ^ x = F
             return new Val(false);
         }
         return new Xor(expL, expR);
