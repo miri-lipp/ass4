@@ -3,7 +3,7 @@ import java.util.Map;
 /**
  * Class for Binary expressions.
  */
-public abstract class BinaryExpression extends BaseExpression implements Expression {
+public abstract class BinaryExpression extends BaseExpression {
     private final Expression left;
     private final Expression right;
 

@@ -3,7 +3,7 @@ import java.util.Map;
 /**
  * Class Nor.
  */
-public class Nor extends BinaryExpression implements Expression {
+public class Nor extends BinaryExpression {
     /**
      * Nor constructor.
      * @param left part of expression.
@@ -40,5 +40,30 @@ public class Nor extends BinaryExpression implements Expression {
         Expression secondPart = new Nand(expR, expR);
         Expression exp = new Nand(firstPart, secondPart);
         return new Nand(exp, exp);
+    }
+
+    @Override
+    public Expression norify() {
+        return this;
+    }
+
+    @Override
+    public Expression simplify() throws Exception {
+        Expression expL = getLeft().simplify();
+        Expression expR = getRight().simplify();
+        if (expR.getVariables().isEmpty() && expL.getVariables().isEmpty()) { //no variables
+            return new Val(this.evaluate());
+        }
+        if (!expL.evaluate()) { // F V x = ~x
+            return new Not(expR);
+        } else if (!expR.evaluate()) { //x V F = ~x
+            return new Not(expL);
+        } else if ((expR.getVariables().isEmpty() && expR.evaluate())
+                || (expL.getVariables().isEmpty() && expL.evaluate())) { // x V T = F
+            return new Val(false);
+        } else if (expL.getVariables().equals(expR.getVariables())) { //x V x = ~x
+            return new Not(expL);
+        }
+        return new Nor(expL, expR);
     }
 }

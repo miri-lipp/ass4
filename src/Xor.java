@@ -3,7 +3,7 @@ import java.util.Map;
 /**
  * Class Xor.
  */
-public class Xor extends BinaryExpression implements Expression {
+public class Xor extends BinaryExpression {
     /**
      * Xor constructor.
      * @param left part of expression.
@@ -41,4 +41,37 @@ public class Xor extends BinaryExpression implements Expression {
         Expression exp3 = new Nand(expR, exp1);
         return new Nand(exp2, exp3);
     }
+
+    @Override
+    public Expression norify() {
+        Expression expL = getLeft().norify();
+        Expression expR = getRight().norify();
+        Expression exp1 = new Nor(expL, expL);
+        Expression exp2 = new Nor(expR, expR);
+        Expression exp3 = new Nor(exp1, exp2);
+        Expression exp4 = new Nor(expL, expR);
+        return new Nor(exp3, exp4);
+    }
+
+    @Override
+    public Expression simplify() throws Exception {
+        Expression expL = getLeft().simplify();
+        Expression expR = getRight().simplify();
+        if (expL.getVariables().isEmpty() && expR.getVariables().isEmpty()) { //no variables
+            return new Val(this.evaluate());
+        }
+        if (expL.getVariables().isEmpty() && expL.evaluate()) { // T ^ x = ~x
+            return new Not(expR);
+        } else if (expR.getVariables().isEmpty() && expR.evaluate()) { // x ^ T = ~x
+            return new Not(expL);
+        } else if (!expR.evaluate()) { // x ^ F = x
+            return expL;
+        } else if (!expL.evaluate()) { // F ^ x = x
+            return expR;
+        } else if (expL.getVariables().equals(expR.getVariables())) { // x ^ x = F
+            return new Val(false);
+        }
+        return new Xor(expL, expR);
+    }
+
 }

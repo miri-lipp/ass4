@@ -4,7 +4,7 @@ import java.util.Map;
 /**
  * Hierarchy class for unary operators.
  */
-public abstract class UnaryExpression extends BaseExpression implements Expression {
+public abstract class UnaryExpression extends BaseExpression {
     private final Expression expr;
 
     /**
@@ -57,5 +57,20 @@ public abstract class UnaryExpression extends BaseExpression implements Expressi
     public Expression nandify() {
         Expression exp = getExpr().nandify();
         return new Nand(exp, exp);
+    }
+
+    @Override
+    public Expression norify() {
+        Expression exp = getExpr().norify();
+        return new Nor(exp, exp);
+    }
+
+    @Override
+    public Expression simplify() throws Exception {
+        Expression exp = getExpr().simplify();
+        if (exp.getVariables().isEmpty()) { //if no variables
+            return new Val(exp.evaluate());
+        }
+        return new Not(exp);
     }
 }

@@ -2,7 +2,7 @@
 /**
  * Class Not.
  */
-public class Not extends UnaryExpression implements Expression {
+public class Not extends UnaryExpression {
     /**
      * Constructor for Not of val.
      * @param expr Var object.

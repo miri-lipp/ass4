@@ -66,4 +66,10 @@ public interface Expression {
      * @return expression only with nor.
      */
     Expression norify();
+
+    /**
+     * Simplifying the expression.
+     * @return simplified expression.
+     */
+    Expression simplify() throws Exception;
 }

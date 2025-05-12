@@ -25,7 +25,7 @@ public class Var implements Expression {
 
     @Override
     public Boolean evaluate() throws Exception {
-        return null;
+        return true;
     }
 
     @Override
@@ -43,6 +43,16 @@ public class Var implements Expression {
 
     @Override
     public Expression nandify() {
+        return this;
+    }
+
+    @Override
+    public Expression norify() {
+        return this;
+    }
+
+    @Override
+    public Expression simplify() {
         return this;
     }
 

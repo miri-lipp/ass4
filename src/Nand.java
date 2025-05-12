@@ -3,7 +3,7 @@ import java.util.Map;
 /**
  * Class Nand.
  */
-public class Nand extends BinaryExpression implements Expression {
+public class Nand extends BinaryExpression {
 
     /**
      * Nand constructor.
@@ -36,5 +36,34 @@ public class Nand extends BinaryExpression implements Expression {
     @Override
     public Expression nandify() {
         return this;
+    }
+
+    @Override
+    public Expression norify() {
+        Expression expL = getLeft();
+        Expression expR = getRight();
+        Expression norL = new Nor(expL, expL);
+        Expression norR = new Nor(expR, expR);
+        Expression norFull = new Nor(norL, norR);
+        return new Nor(norFull, norFull);
+    }
+
+    @Override
+    public Expression simplify() throws Exception {
+        Expression expL = getLeft().simplify();
+        Expression expR = getRight().simplify();
+        if (expL.getVariables().isEmpty() && expR.getVariables().isEmpty()) { //no variables
+            return new Val(this.evaluate());
+        }
+        if (expL.getVariables().equals(expR.getVariables())) { // x A x = ~x
+            return new Not(expL);
+        } else if (expR.evaluate() && expR.getVariables().isEmpty()) { //x A T = ~x
+            return new Not(expL);
+        } else if (expL.evaluate() && expL.getVariables().isEmpty()) { //T A x = ~x
+            return new Not(expR);
+        } else if (!expR.evaluate() || !expR.evaluate()) { //F A x == x A F = T
+            return new Val(true);
+        }
+        return new Nand(expL, expR);
     }
 }

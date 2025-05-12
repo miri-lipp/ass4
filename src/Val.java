@@ -46,6 +46,16 @@ public class Val implements Expression {
     }
 
     @Override
+    public Expression norify() {
+        return this;
+    }
+
+    @Override
+    public Expression simplify() throws Exception {
+        return this;
+    }
+
+    @Override
     public String toString() {
         return this.val ? "T" : "F";
     }

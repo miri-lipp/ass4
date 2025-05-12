@@ -2,7 +2,7 @@ import java.util.Map;
 /**
  * Class Xnor.
  */
-public class Xnor extends BinaryExpression implements Expression {
+public class Xnor extends BinaryExpression {
     /**
      * Xnor constructor.
      * @param left part of expression.
@@ -40,5 +40,28 @@ public class Xnor extends BinaryExpression implements Expression {
         Expression exp1 = new Nand(expL, expR);
         Expression exp2 = new Nand(firstPart, secondPart);
         return new Nand(exp1, exp2);
+    }
+
+    @Override
+    public Expression norify() {
+        Expression expL = getLeft().norify();
+        Expression expR = getRight().norify();
+        Expression insidePart = new Nor(expL, expR);
+        Expression firstPart = new Nor(expL, insidePart);
+        Expression secondPart = new Nor(expR, insidePart);
+        return new Nor(firstPart, secondPart);
+    }
+
+    @Override
+    public Expression simplify() throws Exception {
+        Expression expL = getLeft().simplify();
+        Expression expR = getRight().simplify();
+        if (expL.getVariables().isEmpty() && expR.getVariables().isEmpty()) { //no variables
+            return new Val(this.evaluate());
+        }
+        if (expL.getVariables().equals(expR.getVariables())) { // x # x = T
+            return new Val(true);
+        }
+        return new Xnor(expL, expR);
     }
 }
