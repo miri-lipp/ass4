@@ -61,7 +61,7 @@ public class Nor extends BinaryExpression {
         } else if ((expR.getVariables().isEmpty() && expR.evaluate())
                 || (expL.getVariables().isEmpty() && expL.evaluate())) { // x V T = F
             return new Val(false);
-        } else if (expL.equals(expR)) { //x V x = ~x
+        } else if (expL.equals(expR) || equals(expL, expR)) { //x V x = ~x
             return new Not(expL);
         }
         return new Nor(expL, expR);

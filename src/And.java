@@ -63,7 +63,7 @@ public class And extends BinaryExpression implements Expression {
         } else if ((expR.getVariables().isEmpty() && !expR.evaluate())
                 || (expL.getVariables().isEmpty() && !expL.evaluate())) { //F && x == x && F = F
             return new Val(false);
-        } else if (expL.equals(expR)) { //x && x = x
+        } else if (equals(expL, expR) || expL.equals(expR)) { //x && x = x
             return expL;
         }
         return new And(expL, expR);

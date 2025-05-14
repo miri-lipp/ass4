@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Map;
 /**
  * Class for Binary expressions.
  */
@@ -10,16 +9,6 @@ public abstract class BinaryExpression extends BaseExpression {
     protected BinaryExpression(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-    }
-
-    @Override
-    public Boolean evaluate(Map<String, Boolean> assignment) throws Exception {
-        return null;
-    }
-
-    @Override
-    public Boolean evaluate() throws Exception {
-        return null;
     }
 
     @Override
@@ -58,5 +47,19 @@ public abstract class BinaryExpression extends BaseExpression {
 
     protected String format(String symbol) {
         return binaryToString(symbol, this.left, this.right);
+    }
+
+    protected boolean equal(Expression e1, Expression e2) {
+        if (e1.equals(e2)) {
+            return true;
+        }
+        if (e1.getClass() != e2.getClass()) {
+            return false;
+        }
+        if (e1 instanceof BinaryExpression be1 && e2 instanceof BinaryExpression be2) {
+            return (be1.getLeft().equals(be2.getRight()) && be1.getRight().equals(be2.getLeft()));
+        }
+
+        return false;
     }
 }

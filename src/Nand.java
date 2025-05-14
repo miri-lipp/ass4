@@ -55,7 +55,7 @@ public class Nand extends BinaryExpression {
         if (expL.getVariables().isEmpty() && expR.getVariables().isEmpty()) { //no variables
             return new Val(this.evaluate());
         }
-        if (expL.equals(expR)) { // x A x = ~x
+        if (expL.equals(expR) || equals(expL, expR)) { // x A x = ~x
             return new Not(expL);
         } else if (expR.getVariables().isEmpty() && expR.evaluate()) { //x A T = ~x
             return new Not(expL);

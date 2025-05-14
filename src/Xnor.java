@@ -59,7 +59,7 @@ public class Xnor extends BinaryExpression {
         if (expL.getVariables().isEmpty() && expR.getVariables().isEmpty()) { //no variables
             return new Val(this.evaluate());
         }
-        if (expL.equals(expR)) { // x # x = T
+        if (expL.equals(expR) || equals(expR, expL)) { // x # x = T
             return new Val(true);
         }
         return new Xnor(expL, expR);

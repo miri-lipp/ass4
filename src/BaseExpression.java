@@ -30,9 +30,10 @@ public abstract class BaseExpression implements Expression {
 
     /**
      * Binary to string.
+     *
      * @param symbol of binary operator
-     * @param left expression.
-     * @param right expression.
+     * @param left   expression.
+     * @param right  expression.
      * @return new string.
      */
     protected String binaryToString(String symbol, Expression left, Expression right) {
@@ -41,7 +42,8 @@ public abstract class BaseExpression implements Expression {
 
     /**
      * Unary to string.
-     * @param symbol symbol of unary operator.
+     *
+     * @param symbol     symbol of unary operator.
      * @param expression expression.
      * @return new string.
      */
@@ -51,6 +53,7 @@ public abstract class BaseExpression implements Expression {
 
     /**
      * Merging two lists into one without repetitions.
+     *
      * @param list1 first expression.
      * @param list2 second one.
      * @return new list.
@@ -61,4 +64,33 @@ public abstract class BaseExpression implements Expression {
         return new ArrayList<>(vars);
     }
 
+    /**
+     * equals method.
+     * @param a first expression.
+     * @param b second expression.
+     * @return true of they are equal.
+     */
+    public static boolean equals(Expression a, Expression b) {
+        if (a == b) {
+            return true;
+        }
+        if (a == null || b == null) {
+            return false;
+        }
+        if (a.getClass() != b.getClass()) {
+            return false;
+        }
+
+        if (a instanceof BinaryExpression exprA && b instanceof BinaryExpression exprB) {
+            // commutative check (x op y == y op x)
+            return (equals(exprA.getLeft(), exprB.getLeft()) && equals(exprA.getRight(), exprB.getRight()))
+                    || (equals(exprA.getLeft(), exprB.getRight())
+                    && equals(exprA.getRight(), exprB.getLeft()));
+        }
+        if (a instanceof Var && b instanceof Var) {
+            return (a).toString().equals((b).toString());
+        }
+        return a.equals(b);
+    }
 }
+
