@@ -61,7 +61,8 @@ public class Nand extends BinaryExpression {
             return new Not(expL);
         } else if (expL.getVariables().isEmpty() && expL.evaluate()) { //T A x = ~x
             return new Not(expR);
-        } else if ((expR.getVariables().isEmpty() && !expR.evaluate()) || (expL.getVariables().isEmpty() && !expL.evaluate())) { //F A x == x A F = T
+        } else if ((expR.getVariables().isEmpty() && !expR.evaluate())
+                || (expL.getVariables().isEmpty() && !expL.evaluate())) { //F A x == x A F = T
             return new Val(true);
         }
         return new Nand(expL, expR);
