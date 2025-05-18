@@ -44,7 +44,7 @@ public class Nor extends BinaryExpression {
 
     @Override
     public Expression norify() {
-        return this;
+        return new Nor(getLeft().norify(), getRight().norify());
     }
 
     @Override

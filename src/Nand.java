@@ -35,7 +35,7 @@ public class Nand extends BinaryExpression {
 
     @Override
     public Expression nandify() {
-        return this;
+        return new Nand(getLeft().nandify(), getRight().nandify());
     }
 
     @Override

@@ -3,7 +3,7 @@ import java.util.TreeMap;
 
 /**
  * Main class.
- *
+ *ID 336239652
  */
 public class ExpressionsTest {
     /**
@@ -15,6 +15,8 @@ public class ExpressionsTest {
                 new Or(new Not(new Var("y")), new And(new Var("z"),
                         new Nor(new Not(new Val(false)), new Val(true)))));
         System.out.println(e1);
+//        Expression e2 = new Nor(new And(new Var("x"), new Var("y")), new Val(true));
+//        System.out.println(e2.norify());
         // create map of variables and values.
         Map<String, Boolean> assignment = new TreeMap<>();
         assignment.put("y", true);
